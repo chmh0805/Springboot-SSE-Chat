@@ -1,0 +1,12 @@
+package com.hyuk.chatserver;
+
+public class Test {
+
+	public static void main(String[] args) {
+		String response = "username=ssar&password=1234";
+		 String rawUsername = response.split("&")[0];
+		 String rawPassword = response.split("&")[1];
+		 System.out.println(rawUsername.split("=")[1]);
+		 System.out.println(rawPassword.split("=")[1]);
+	}
+}

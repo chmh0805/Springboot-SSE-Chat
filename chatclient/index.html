@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <title>Hyuk 채팅 웹</title>
+    <link rel= "stylesheet" type="text/css" href="/css/index.css">
+</head>
+<body style="background-color: rgba(222, 247, 227, 0.932);">
+    <div class="container">
+        <textarea id="chat-box" class="chat-box" rows="20" readonly="true" ></textarea>
+        <form>
+            <input id="username" class="usernameInput" placeholder="닉네임 입력"/>
+            <input id="message" class="messageInput" placeholder="내용 입력"/>
+            <button id="btn-send" class="btn btn-success" style="width: 14%;">보내기</button>
+        </form>
+    </div>
+
+    <script>
+        const eventSource = new EventSource('http://localhost:8080/');
+        eventSource.onmessage = event => {
+            let mTextarea = $("#chat-box");
+            mTextarea.append(event.data);
+        };
+        eventSource.onerror = error => {
+            eventSource.close();
+        };
+
+        $("#btn-send").on('click', (e) => {
+            e.preventDefault();
+
+            let username = $("#username").val();
+            let message = $("#message").val();
+            
+            if (username === "") {
+                username = "익명";
+            }
+
+            let data = {
+                "username": username,
+                "message": message
+            }
+            
+            $.ajax({
+                type: "POST",
+                url: "http://localhost:8080/send",
+                data: JSON.stringify(data),
+                dataType: "text",
+                contentType: "application/json; charset=utf-8"
+            }).done((res) => {
+                console.log('보내기 성공');
+                $("#message").val('');
+            }).fail((res) => {
+                console.log(res);
+            });
+
+        });
+    </script>
+</body>
+</html>

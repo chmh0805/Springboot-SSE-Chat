@@ -1,0 +1,5 @@
+package com.hyuk.chatserver.domain;
+
+public class ChatPostDto {
+
+}

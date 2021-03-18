@@ -1,0 +1,21 @@
+.border-1px-black {
+  border: 1px solid black;
+}
+
+.chat-box {
+  width: 100%;
+  background-color: rgb(223, 208, 208);
+  border: 1px solid black;
+  font-size: 18px;
+  padding-left: 3px;
+}
+
+.usernameInput {
+  width: 15%;
+  height: 40px;
+}
+
+.messageInput {
+  width: 70%;
+  height: 40px;
+}
